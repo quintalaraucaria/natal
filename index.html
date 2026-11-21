@@ -774,7 +774,7 @@ function card(k){
     tot.textContent=(k.preco&&(q>1||extra))?`${q} ${q>1?"kits":"kit"} · total ${brl((k.preco+extra)*q)}${partes?` (inclui ${partes} por caixa)`:""}`:"";
   };
   el.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{input.value=(parseInt(input.value)||1)+ +b.dataset.d;sync()});
-  input.oninput=sync;
+  input.oninput=sync; input.onfocus=()=>input.select();
   el.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{
     const on=b.getAttribute("aria-pressed")!=="true"; b.setAttribute("aria-pressed",on);
     on?pers.add(b.dataset.p):pers.delete(b.dataset.p);
@@ -811,7 +811,7 @@ function card(k){
   sec.querySelectorAll("[data-ps]").forEach(b=>b.onclick=()=>{sec.querySelectorAll("[data-ps]").forEach(x=>x.setAttribute("aria-pressed",x===b));tam=b.dataset.ps;preco=+b.dataset.pp;sync();});
   sec.querySelectorAll("[data-pd]").forEach(b=>b.onclick=()=>{q.value=(parseInt(q.value)||1)+ +b.dataset.pd;sync();});
   sec.querySelectorAll("[data-pf]").forEach(b=>b.onclick=()=>{sec.querySelectorAll("[data-pf]").forEach(x=>x.setAttribute("aria-pressed",x===b));sabor=b.dataset.pf;sync();});
-  q.oninput=sync; sync();
+  q.oninput=sync; q.onfocus=()=>q.select(); sync();
 })();
 const grid=document.getElementById("grid"), fgrid=document.getElementById("fgrid");
 KITS.forEach(k=>{ const c=card(k); if(k.destaque){c.classList.add("is-feat");fgrid.appendChild(c);} else grid.appendChild(c); });
