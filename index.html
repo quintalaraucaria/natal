@@ -260,6 +260,7 @@ footer img{width:64px;height:64px;border-radius:50%;display:block}
 .fab{position:fixed;z-index:20;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 20px;border-radius:999px;background:var(--wa);color:#fff;text-decoration:none;font-weight:600;font-size:15px;box-shadow:0 8px 20px -6px rgba(0,0,0,.35)}
 .fab svg{width:20px;height:20px}
 </style>
+<script data-goatcounter="https://quintalaraucaria.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -858,6 +859,21 @@ function card(k){
   addEventListener("scroll",show,{passive:true}); show();
   t.onclick=()=>window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
 })();
+/* Métricas (GoatCounter): conta cliques nos botões quando o contador está carregado */
+document.addEventListener("click",e=>{
+  const a=e.target.closest("a,button"); if(!a||!window.goatcounter||!window.goatcounter.count) return;
+  let path="", title="";
+  const kit=a.closest(".kit");
+  if(a.classList.contains("cta")&&kit){ title=`${kit.querySelector(".gtag").textContent} · ${kit.querySelector("h3").textContent}`; path="pedido-kit/"+title; }
+  else if(a.id==="pan-cta"){ path="pedido-panetone"; title="Panetone"; }
+  else if(a.id==="fab"){ path="whatsapp-flutuante"; title="WhatsApp flutuante"; }
+  else if(a.id==="pill"){ path="whatsapp-topo"; title="Fale conosco (topo)"; }
+  else if(a.id==="corp"){ path="orcamento-empresa"; title="Orçamento para empresa"; }
+  else if(a.id==="fam"){ path="personalizar-familia"; title="Personalizar para família"; }
+  else if((a.href||"").includes("instagram.com")){ path="instagram"; title="Instagram"; }
+  else if((a.href||"").includes("waze.com")){ path="waze"; title="Waze"; }
+  if(path) window.goatcounter.count({path, title, event:true});
+},true);
 const grid=document.getElementById("grid"), fgrid=document.getElementById("fgrid");
 KITS.forEach(k=>{ const c=card(k); if(k.destaque){c.classList.add("is-feat");fgrid.appendChild(c);} else grid.appendChild(c); });
 document.getElementById("feat").hidden=!fgrid.children.length;
